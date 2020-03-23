@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>mineverse.Aust1n46.chat</groupId>
-    <artifactId>MineverseChat</artifactId>
+    <artifactId>VentureChat</artifactId>
     <version>2.18.0</version>
 
     <name>${project.artifactId}</name>
@@ -16,15 +16,10 @@
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Used in plugin.yml -->
-        <mainClass>${project.groupId}.${project.artifactId}</mainClass>
+        <mainClass>${project.groupId}.MineverseChat</mainClass>
         <!-- Also used in plugin.yml -->
         <author>Aust1n46</author>
     </properties>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/InventivetalentDev/GlowAPI/issues</url>
-    </issueManagement>
 
     <scm>
         <connection>scm:git:https://bitbucket.org/Aust1n46/venturechat.git</connection>
@@ -32,12 +27,11 @@
     </scm>
 
     <build>
-        <finalName>VentureChat</finalName>
+        <finalName>${project.artifactId}</finalName>
         <defaultGoal>clean package</defaultGoal>
-        <sourceDirectory>MineverseChat</sourceDirectory>
         <resources>
             <resource>
-                <directory>MineverseChat</directory>
+                <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -94,8 +88,7 @@
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
             <version>1.8.4-R0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/craftbukkit-1.8.4-R0.1-SNAPSHOT-latest.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Factions -->
@@ -103,15 +96,13 @@
             <groupId>com.github.MassiveCraft</groupId>
             <artifactId>Factions</artifactId>
             <version>2.14.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/Factions.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.MassiveCraft</groupId>
             <artifactId>MassiveCore</artifactId>
             <version>2.14.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/MassiveCore.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
 
         <!-- JSON -->
@@ -148,8 +139,7 @@
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>Towny</artifactId>
             <version>0.96.0.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/Towny-0.96.0.0.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Vault -->

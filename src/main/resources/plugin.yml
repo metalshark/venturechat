@@ -1,11 +1,11 @@
-name: VentureChat
-version: 2.18.0
+name: ${project.name}
+version: ${project.version}
 api-version: 1.13
-main: mineverse.Aust1n46.chat.MineverseChat
+main: ${mainClass}
 depend: [Vault, ProtocolLib, PlaceholderAPI]
 softdepend: [Towny, Factions, Heroes]
-author: Aust1n46
-website: https://bitbucket.org/Aust1n46/venturechat/
+author: ${author}
+website: ${scm.url}
 description: #1 Channels Chat plugin! Spigot + Bungee. Supports PlaceholderAPI + JSON formatting. Moderation GUI!
 commands:
     mute:
