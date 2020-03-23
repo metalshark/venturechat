@@ -15,11 +15,11 @@ public abstract class Database {
 
 	public abstract Connection openConnection() throws SQLException, ClassNotFoundException;
 
-	public abstract boolean checkConnection() throws SQLException;
+	public abstract boolean checkConnection() throws Exception;
 
-	public abstract Connection getConnection();
+	public abstract Connection getConnection() throws SQLException;
 
-	public abstract boolean closeConnection() throws SQLException;
+	public abstract boolean closeConnection() throws Exception;
 
 	public abstract ResultSet querySQL(String query) throws SQLException, ClassNotFoundException;
 
