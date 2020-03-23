@@ -47,7 +47,7 @@ public class ChatListener implements Listener {
 	}
 
 	// this event isn't always asynchronous even though the event's name starts with "Async"
-    // blame md_5 for that one (•_•)
+    // blame md_5 for that one (â€¢_â€¢)
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {
 		event.setCancelled(true);
@@ -58,7 +58,7 @@ public class ChatListener implements Listener {
 			}
 		});
 	}
-	
+
 	public void handleTrueAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {
 		boolean bungee = false;
 		String chat = event.getMessage();
@@ -66,17 +66,17 @@ public class ChatListener implements Listener {
 		Set<Player> recipients = event.getRecipients();
 		MineverseChatPlayer mcp = MineverseChatAPI.getOnlineMineverseChatPlayer(event.getPlayer());
 		ChatChannel eventChannel = mcp.getCurrentChannel();
-		
+
 		if(mcp.isEditing()) {
 			mcp.getPlayer().sendMessage(Format.FormatStringAll(chat));
 			mcp.setEditing(false);
 			return;
 		}
-		
+
 		if(mcp.isQuickChat()) {
 			eventChannel = mcp.getQuickChannel();
 		}
-		
+
 		if(mcp.hasConversation() && !mcp.isQuickChat()) {
 			MineverseChatPlayer tp = MineverseChatAPI.getMineverseChatPlayer(mcp.getConversation());
 			if(!tp.isOnline()) {
@@ -212,7 +212,7 @@ public class ChatListener implements Listener {
 			mcp.getPlayer().sendMessage(ChatColor.RED + "You are not in a party.");
 			return;
 		}
-		
+
 		Location locreceip;
 		Location locsender = mcp.getPlayer().getLocation();
 		Location diff;
@@ -226,9 +226,9 @@ public class ChatListener implements Listener {
 				//String date = formatter.format(currentDate.getTime());
 				//String[] datearray = date.split(":");
 				//int datetime = (Integer.parseInt(datearray[0]) * 1440) + (Integer.parseInt(datearray[1]) * 60) + (Integer.parseInt(datearray[2]));
-				
+
 				int time = (int) (System.currentTimeMillis() / 60000);
-				
+
 				String keyword = "minutes";
 				int timemark = mcp.getMutes().get(eventChannel.getName()).intValue();
 				int remaining = timemark - time;
@@ -255,9 +255,9 @@ public class ChatListener implements Listener {
 		}
 		curColor = eventChannel.getChatColor().toUpperCase();
 		bungee = eventChannel.getBungee();
-		
+
 		int time = (int) (System.currentTimeMillis() / 1000);
-		
+
 		if(eventChannel.hasCooldown()) {
 			chCooldown = eventChannel.getCooldown();
 		}
@@ -285,13 +285,13 @@ public class ChatListener implements Listener {
 		catch(NumberFormatException e) {
 			e.printStackTrace();
 		}
-		
+
 		if(mcp.hasSpam(eventChannel) && plugin.getConfig().getConfigurationSection("antispam").getBoolean("enabled") && !mcp.getPlayer().hasPermission("venturechat.spam.bypass")) {
 			int spamcount = mcp.getSpam().get(eventChannel).get(0);
 			int spamtime = mcp.getSpam().get(eventChannel).get(1);
 			int spamtimeconfig = plugin.getConfig().getConfigurationSection("antispam").getInt("spamnumber");
 			int mutedfor = plugin.getConfig().getConfigurationSection("antispam").getInt("mutetime", 0);
-			
+
 			int datetime = time/60;
 			if(time < spamtime + plugin.getConfig().getConfigurationSection("antispam").getInt("spamtime")) {
 				if(spamcount + 1 >= spamtimeconfig) {
@@ -328,17 +328,17 @@ public class ChatListener implements Listener {
 			mcp.getSpam().get(eventChannel).add(0, 1);
 			mcp.getSpam().get(eventChannel).add(1, time);
 		}
-		
+
 		if(eventChannel.hasDistance()) {
 			chDistance = eventChannel.getDistance();
 		}
-		
+
 		format = PlaceholderAPI.setBracketPlaceholders(mcp.getPlayer(), Format.FormatStringAll(plugin.getConfig().getConfigurationSection("channels." + eventChannel.getName()).getString("format")));
 		if(plugin.getConfig().getBoolean("formatcleaner", false)) {
 			format = format.replace("[]", " ");
 			format = format.replace("    ", " ").replace("   ", " ").replace("  ", " ");
 		}
-		
+
 		filterthis = eventChannel.isFiltered();
 		if(filterthis) {
 			if(mcp.hasFilter()) {
@@ -439,7 +439,7 @@ public class ChatListener implements Listener {
 				}
 			}
 		}
-		
+
 		if(mcp.getPlayer().hasPermission("venturechat.color")) {
 			chat = Format.FormatStringColor(chat);
 		}
@@ -456,12 +456,12 @@ public class ChatListener implements Listener {
 		else {
 			chat = ChatColor.valueOf(curColor) + chat;
 		}
-		
+
 		String globalJSON = Format.convertToJson(mcp, format, chat);
 		String consoleChat = format + chat;
-		String message = consoleChat.replaceAll("(§([a-z0-9]))", "");
+		String message = consoleChat.replaceAll("(Â§([a-z0-9]))", "");
 		int hash = message.hashCode();
-		
+
 		//Create VentureChatEvent
 		VentureChatEvent ventureChatEvent = new VentureChatEvent(mcp, mcp.getName(), mcp.getNickname(), MineverseChat.permission.getPrimaryGroup(mcp.getPlayer()), eventChannel, recipients, format, chat, globalJSON, hash, bungee);
 		//Fire event and wait for other plugin listeners to act on it
@@ -469,7 +469,7 @@ public class ChatListener implements Listener {
 		//Call method to send the processed chat
 		handleVentureChatEvent(ventureChatEvent);
 	}
-	
+
 	public void handleVentureChatEvent(VentureChatEvent event) {
 		MineverseChatPlayer mcp = event.getMineverseChatPlayer();
 		ChatChannel channel = event.getChannel();
@@ -480,7 +480,7 @@ public class ChatListener implements Listener {
 		String globalJSON = event.getGlobalJSON();
 		int hash = event.getHash();
 		boolean bungee = event.isBungee();
-		
+
 		if(plugin.mysql) {
 			Statement statement;
 			Calendar currentDate = Calendar.getInstance();
@@ -494,11 +494,11 @@ public class ChatListener implements Listener {
 				e.printStackTrace();
 			}
 		}
-		
+
 		if(!bungee) {
 			if(recipients.size() == 1) {
 				if(!plugin.getConfig().getString("emptychannelalert", "&6No one is listening to you.").equals("")) {
-					mcp.getPlayer().sendMessage(Format.FormatStringAll(plugin.getConfig().getString("emptychannelalert", "&6No one is listening to you.")));	
+					mcp.getPlayer().sendMessage(Format.FormatStringAll(plugin.getConfig().getString("emptychannelalert", "&6No one is listening to you.")));
 				}
 			}
 			for(Player p : recipients) {

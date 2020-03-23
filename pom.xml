@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>mineverse.Aust1n46.chat</groupId>
+    <artifactId>MineverseChat</artifactId>
+    <version>2.18.0</version>
+
+    <name>${project.artifactId}</name>
+    <description>The Official Chat Plugin of VENTUREMC</description>
+    <url>https://www.spigotmc.org/resources/venturechat.771/</url>
+
+    <properties>
+        <!-- Removes warnings -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Used in plugin.yml -->
+        <mainClass>${project.groupId}.${project.artifactId}</mainClass>
+        <!-- Also used in plugin.yml -->
+        <author>Aust1n46</author>
+    </properties>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/InventivetalentDev/GlowAPI/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:https://bitbucket.org/Aust1n46/venturechat.git</connection>
+        <url>https://bitbucket.org/Aust1n46/venturechat</url>
+    </scm>
+
+    <build>
+        <finalName>VentureChat</finalName>
+        <defaultGoal>clean package</defaultGoal>
+        <sourceDirectory>MineverseChat</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>MineverseChat</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- Spigot -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.15.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Bungeecord -->
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>1.15-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Bungeecord Javadocs -->
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>1.15-SNAPSHOT</version>
+            <type>javadoc</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Bukkit -->
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.15.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- CraftBukkit -->
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.8.4-R0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/MineverseChat/craftbukkit-1.8.4-R0.1-SNAPSHOT-latest.jar</systemPath>
+        </dependency>
+
+        <!-- Factions -->
+        <dependency>
+            <groupId>com.github.MassiveCraft</groupId>
+            <artifactId>Factions</artifactId>
+            <version>2.14.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/MineverseChat/Factions.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MassiveCraft</groupId>
+            <artifactId>MassiveCore</artifactId>
+            <version>2.14.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/MineverseChat/MassiveCore.jar</systemPath>
+        </dependency>
+
+        <!-- JSON -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20190722</version>
+        </dependency>
+
+        <!-- JSON Simple -->
+        <dependency>
+            <groupId>org.apache.clerezza.ext</groupId>
+            <artifactId>org.json.simple</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+        <!-- PlaceholderAPI -->
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.0.6</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ProtocolLib -->
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+
+        <!-- Towny -->
+        <dependency>
+            <groupId>com.palmergames.bukkit.towny</groupId>
+            <artifactId>Towny</artifactId>
+            <version>0.96.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/MineverseChat/Towny-0.96.0.0.jar</systemPath>
+        </dependency>
+
+        <!-- Vault -->
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <!-- JitPack -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
+        <!-- Maven Central -->
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+
+        <!-- PlaceholderAPI -->
+        <repository>
+            <id>placeholderapi</id>
+            <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+
+        <!-- ProtocolLib -->
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
+        </repository>
+
+        <!-- SpigotMC -->
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+</project>
