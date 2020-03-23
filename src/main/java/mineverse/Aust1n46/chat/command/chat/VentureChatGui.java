@@ -25,7 +25,7 @@ import mineverse.Aust1n46.chat.utilities.Format;
 import mineverse.Aust1n46.chat.versions.VersionHandler;
 
 public class VentureChatGui extends MineverseCommand {
-	private MineverseChat plugin = MineverseChat.getInstance();;
+	private MineverseChat plugin = MineverseChat.getInstance();
 
 	public VentureChatGui(String name) {
 		super(name);

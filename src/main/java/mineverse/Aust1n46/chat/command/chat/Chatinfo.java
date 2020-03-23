@@ -11,7 +11,7 @@ import mineverse.Aust1n46.chat.channel.ChatChannel;
 import mineverse.Aust1n46.chat.command.MineverseCommand;
 
 public class Chatinfo extends MineverseCommand {
-	private MineverseChat plugin = MineverseChat.getInstance();;
+	private MineverseChat plugin = MineverseChat.getInstance();
 
 	public Chatinfo(String name) {
 		super(name);

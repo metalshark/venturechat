@@ -12,7 +12,7 @@ import mineverse.Aust1n46.chat.command.MineverseCommand;
 import mineverse.Aust1n46.chat.localization.LocalizedMessage;
 
 public class Leave extends MineverseCommand {
-	private MineverseChat plugin = MineverseChat.getInstance();;
+	private MineverseChat plugin = MineverseChat.getInstance();
 	
 	public Leave(String name) {
 		super(name);

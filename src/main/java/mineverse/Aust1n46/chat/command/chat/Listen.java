@@ -12,7 +12,7 @@ import mineverse.Aust1n46.chat.command.MineverseCommand;
 import mineverse.Aust1n46.chat.localization.LocalizedMessage;
 
 public class Listen extends MineverseCommand {
-	private MineverseChat plugin = MineverseChat.getInstance();;
+	private MineverseChat plugin = MineverseChat.getInstance();
 
 	public Listen(String name) {
 		super(name);
