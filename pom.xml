@@ -72,12 +72,6 @@
                                     <shadedPattern>${project.groupId}.dependencies.org.json</shadedPattern>
                                 </relocation>
 
-                                <!-- JSON Simple -->
-                                <relocation>
-                                    <pattern>org.json.simple</pattern>
-                                    <shadedPattern>${project.groupId}.dependencies.org.json.simple</shadedPattern>
-                                </relocation>
-
                             </relocations>
 
                             <minimizeJar>true</minimizeJar>
@@ -161,14 +155,6 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20190722</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- JSON Simple -->
-        <dependency>
-            <groupId>org.apache.clerezza.ext</groupId>
-            <artifactId>org.json.simple</artifactId>
-            <version>0.4</version>
             <scope>compile</scope>
         </dependency>
 
