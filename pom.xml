@@ -47,6 +47,47 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <relocations>
+
+                                <!-- Hikari -->
+                                <relocation>
+                                    <pattern>com.zaxxer</pattern>
+                                    <shadedPattern>${project.groupId}.dependencies.com.zaxxer</shadedPattern>
+                                </relocation>
+
+                                <!-- JSON -->
+                                <relocation>
+                                    <pattern>org.json</pattern>
+                                    <shadedPattern>${project.groupId}.dependencies.org.json</shadedPattern>
+                                </relocation>
+
+                                <!-- JSON Simple -->
+                                <relocation>
+                                    <pattern>org.json.simple</pattern>
+                                    <shadedPattern>${project.groupId}.dependencies.org.json.simple</shadedPattern>
+                                </relocation>
+
+                            </relocations>
+
+                            <minimizeJar>true</minimizeJar>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
