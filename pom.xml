@@ -5,18 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>mineverse.Aust1n46.chat</groupId>
-    <artifactId>VentureChat</artifactId>
+    <artifactId>MineverseChat</artifactId>
     <version>2.18.0</version>
 
-    <name>${project.artifactId}</name>
+    <name>VentureChat</name>
     <description>The Official Chat Plugin of VENTUREMC</description>
     <url>https://www.spigotmc.org/resources/venturechat.771/</url>
 
     <properties>
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Used in bungee.yml -->
+        <bungeeClass>${project.groupId}.bungee.${project.artifactId}Bungee</bungeeClass>
         <!-- Used in plugin.yml -->
-        <mainClass>${project.groupId}.MineverseChat</mainClass>
+        <mainClass>${project.groupId}.${project.artifactId}</mainClass>
         <!-- Also used in plugin.yml -->
         <author>Aust1n46</author>
     </properties>
@@ -27,7 +29,7 @@
     </scm>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${project.name}</finalName>
         <defaultGoal>clean package</defaultGoal>
         <resources>
             <resource>
@@ -43,30 +45,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <relocations>
-                                <relocation>
-                                    <pattern>com.zaxxer.hikari</pattern>
-                                    <shadedPattern>${project.groupId}.dependencies.com.zaxxer.hikari</shadedPattern>
-                                </relocation>
-                            </relocations>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
             </plugin>
         </plugins>
@@ -134,6 +112,7 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>3.4.2</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- JSON -->
@@ -141,6 +120,7 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20190722</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- JSON Simple -->
@@ -148,6 +128,7 @@
             <groupId>org.apache.clerezza.ext</groupId>
             <artifactId>org.json.simple</artifactId>
             <version>0.4</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- PlaceholderAPI -->
