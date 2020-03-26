@@ -15,8 +15,6 @@ public abstract class Database {
 
 	protected HikariDataSource dataSource = null;
 
-	public abstract void init();
-
 	public void writeVentureChat(String time, String uuid, String name, String server, String channel, String text, String type) {
 		final MineverseChat plugin = MineverseChat.getInstance();
 		final String SQL_INSERT_VENTURE_CHAT = "INSERT INTO VentureChat " +
