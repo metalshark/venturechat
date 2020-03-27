@@ -31,7 +31,8 @@ public abstract class Database {
 				statement.setString(6, text);
 				statement.setString(7, type);
 				statement.executeUpdate();
-			} catch(SQLException e) {
+			}
+			catch(SQLException e) {
 				throw new RuntimeException(e);
 			}
 		});
