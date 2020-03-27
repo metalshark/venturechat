@@ -8,7 +8,7 @@ import java.sql.Statement;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-//This class initializes the plugins connection to the MySQL database if it's enabled.
+//This class initializes the plugin's connection to the MySQL database if it's enabled.
 public class MySQL extends Database {
 
 	public MySQL(String hostname, int port, String database, String user, String password) {
