@@ -25,7 +25,7 @@ import mineverse.Aust1n46.chat.utilities.Format;
 import mineverse.Aust1n46.chat.versions.VersionHandler;
 
 public class VentureChatGui extends MineverseCommand {
-	private MineverseChat plugin = MineverseChat.getInstance();
+	private MineverseChat plugin = MineverseChat.getInstance();;
 
 	public VentureChatGui(String name) {
 		super(name);
@@ -46,30 +46,10 @@ public class VentureChatGui extends MineverseCommand {
 		MineverseChatPlayer mcp = MineverseChatAPI.getMineverseChatPlayer((Player) sender);
 		if(mcp.getPlayer().hasPermission("venturechat.gui")) {
 			MineverseChatPlayer target = MineverseChatAPI.getMineverseChatPlayer(args[0]);
-			if(target == null) {
+			if(target == null && !args[0].equals("Discord")) {
 				mcp.getPlayer().sendMessage(LocalizedMessage.PLAYER_OFFLINE.toString()
 						.replace("{args}", args[0]));
 				return;
-				/*
-				UUID uuid = null;
-				try {
-					uuid = UUIDFetcher.getUUIDOf(args[0]);
-				}
-				catch(Exception e) {
-					e.printStackTrace();
-				}
-				String name = args[0];
-				ChatChannel current = MineverseChat.ccInfo.getDefaultChannel();
-				Set<UUID> ignores = new HashSet<UUID>();
-				Set<String> listening = new HashSet<String>();
-				listening.add(current.getName());
-				HashMap<String, Integer> mutes = new HashMap<String, Integer>();
-				Set<String> blockedCommands = new HashSet<String>();
-				List<String> mail = new ArrayList<String>();
-				String jsonFormat = "Default";
-				target = new MineverseChatPlayer(uuid, name, current, ignores, listening, mutes, blockedCommands, mail, false, null, true, true, name, jsonFormat, false, false, false, true, true, true);
-				MineverseChat.players.add(target);
-				*/
 			}
 			if(ChatChannel.isChannel(args[1])) {
 				ChatChannel channel = ChatChannel.getChannel(args[1]);
@@ -79,6 +59,10 @@ public class VentureChatGui extends MineverseCommand {
 				}
 				catch(Exception e) {
 					sender.sendMessage(LocalizedMessage.INVALID_HASH.toString());
+					return;
+				}
+				if(args[0].equals("Discord")) {
+					this.openInventoryDiscord(mcp, channel, hash);
 					return;
 				}
 				this.openInventory(mcp, target, channel, hash);
@@ -91,7 +75,7 @@ public class VentureChatGui extends MineverseCommand {
 		mcp.getPlayer().sendMessage(LocalizedMessage.COMMAND_NO_PERMISSION.toString());
 		return;
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	private void openInventory(MineverseChatPlayer mcp, MineverseChatPlayer target, ChatChannel channel, int hash) {
 		Inventory inv = Bukkit.createInventory(null, this.getSlots(), "VentureChat: " + target.getName() + " GUI");
@@ -103,26 +87,26 @@ public class VentureChatGui extends MineverseCommand {
 		else {
 			close = new ItemStack(Material.BARRIER);
 		}
-
+		
 		if(VersionHandler.is1_7() || VersionHandler.is1_8() || VersionHandler.is1_9() || VersionHandler.is1_10() || VersionHandler.is1_11() || VersionHandler.is1_12()) {
 			skull = new ItemStack(Material.getMaterial("SKULL_ITEM"));
 		}
 		else {
 			skull = new ItemStack(Material.PLAYER_HEAD);
 		}
-
+		
 		ItemMeta closeMeta = close.getItemMeta();
-		closeMeta.setDisplayName("§oClose GUI");
+		closeMeta.setDisplayName(ChatColor.BLACK + "Close GUI");
 		close.setItemMeta(closeMeta);
-
-		SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-		skullMeta.setOwner(target.getName());
-		skullMeta.setDisplayName("§b" + target.getName());
+		
+		SkullMeta skullMeta = (SkullMeta) skull.getItemMeta(); 
+		skullMeta.setOwner(target.getName()); 
+		skullMeta.setDisplayName("�b" + target.getName());
 		List<String> skullLore = new ArrayList<String>();
-		skullLore.add("§7Channel: " + ChatColor.valueOf(channel.getColor().toUpperCase()) + channel.getName());
-		skullLore.add("§7Hash: " + ChatColor.valueOf(channel.getColor().toUpperCase()) + hash);
+		skullLore.add("�7Channel: " + ChatColor.valueOf(channel.getColor().toUpperCase()) + channel.getName());
+		skullLore.add("�7Hash: " + ChatColor.valueOf(channel.getColor().toUpperCase()) + hash);
 		skullMeta.setLore(skullLore);
-		skull.setItemMeta(skullMeta);
+		skull.setItemMeta(skullMeta); 
 		skull.setDurability((short) 3);
 		inv.setItem(0, skull);
 
@@ -150,11 +134,67 @@ public class VentureChatGui extends MineverseCommand {
 		inv.setItem(8, close);
 		mcp.getPlayer().openInventory(inv);
 	}
+	
+	@SuppressWarnings("deprecation")
+	private void openInventoryDiscord(MineverseChatPlayer mcp, ChatChannel channel, int hash) {
+		Inventory inv = Bukkit.createInventory(null, this.getSlots(), "VentureChat: Discord_Message GUI");
+		ItemStack close = null;
+		ItemStack skull = null;
+		if(VersionHandler.is1_7_10()) {
+			close = new ItemStack(Material.BEDROCK);
+		}
+		else {
+			close = new ItemStack(Material.BARRIER);
+		}
+		
+		if(VersionHandler.is1_7() || VersionHandler.is1_8() || VersionHandler.is1_9() || VersionHandler.is1_10() || VersionHandler.is1_11() || VersionHandler.is1_12()) {
+			skull = new ItemStack(Material.getMaterial("SKULL_ITEM"));
+		}
+		else {
+			skull = new ItemStack(Material.PLAYER_HEAD);
+		}
+		
+		ItemMeta closeMeta = close.getItemMeta();
+		closeMeta.setDisplayName("�oClose GUI");
+		close.setItemMeta(closeMeta);
+		
+		SkullMeta skullMeta = (SkullMeta) skull.getItemMeta(); 
+		skullMeta.setOwner("Scarsz");
+		skullMeta.setDisplayName("�bDiscord_Message");
+		List<String> skullLore = new ArrayList<String>();
+		skullLore.add("�7Channel: " + ChatColor.valueOf(channel.getColor().toUpperCase()) + channel.getName());
+		skullLore.add("�7Hash: " + ChatColor.valueOf(channel.getColor().toUpperCase()) + hash);
+		skullMeta.setLore(skullLore);
+		skull.setItemMeta(skullMeta); 
+		skull.setDurability((short) 3);
+		inv.setItem(0, skull);
 
+		for(GuiSlot g : MineverseChat.gsInfo.getGuiSlots()) {
+			if(!g.hasPermission() || mcp.getPlayer().hasPermission(g.getPermission())) {
+				if(this.checkSlot(g.getSlot())) {
+					MineverseChat.getInstance().getServer().getConsoleSender().sendMessage(Format.FormatStringAll("&cGUI: " + g.getName() + " has invalid slot: " + g.getSlot() + "!"));
+					continue;
+				}
+				ItemStack gStack = new ItemStack(g.getIcon());
+				gStack.setDurability((short) g.getDurability());
+				ItemMeta gMeta = gStack.getItemMeta();
+				String displayName = g.getText().replace("{player_name}", "Discord_Message").replace("{channel}", channel.getName()).replace("{hash}", hash + "");
+				gMeta.setDisplayName(Format.FormatStringAll(displayName));
+				List<String> gLore = new ArrayList<String>();
+				gMeta.setLore(gLore);
+				gStack.setItemMeta(gMeta);
+				inv.setItem(g.getSlot(), gStack);
+			}
+		}
+
+		inv.setItem(8, close);
+		mcp.getPlayer().openInventory(inv);
+	}
+	
 	private boolean checkSlot(int slot) {
 		return slot == 0 || slot == 8;
 	}
-
+	
 	private int getSlots() {
 		int rows = plugin.getConfig().getInt("guirows", 1);
 		if(rows == 2)

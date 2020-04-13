@@ -23,9 +23,9 @@ import mineverse.Aust1n46.chat.json.JsonFormat;
 import mineverse.Aust1n46.chat.versions.VersionHandler;
 
 //This class is where all formatting methods are stored.
-public class Format {
+public class Format { 
 	private static MineverseChat plugin = MineverseChat.getInstance();
-
+	
 	public static String convertToJson(MineverseChatPlayer sender, String format, String chat) {
 		JsonFormat JSONformat = MineverseChat.jfInfo.getJsonFormat(sender.getJsonFormat());
 		String f = format.replace("\\", "\\\\").replace("\"", "\\\"");
@@ -50,14 +50,14 @@ public class Format {
 			}
 			suffix = "venturechat_no_suffix_code";
 			prefix = "venturechat_no_prefix_code";
-		}
+		}	
 		String nickname = "";
 		if(sender.getPlayer() != null) {
 			nickname = FormatStringAll(sender.getPlayer().getDisplayName());
 		}
 		json += convertPlaceholders(f, JSONformat, prefix, nickname, suffix, sender);
 		json += "]}";
-		json += "," + convertLinks(c);
+		json += "," + convertLinks(c);		
 		json += "]";
 		if(plugin.getConfig().getString("loglevel", "info").equals("debug")) {
 			System.out.println(json);
@@ -69,14 +69,14 @@ public class Format {
 		}
 		return json;
 	}
-
+	
 	private static String convertPlaceholders(String s, JsonFormat format, String prefix, String nickname, String suffix, MineverseChatPlayer icp) {
 		String remaining = s;
 		String temp = "";
 		int indexStart = -1;
 		int indexEnd = -1;
 		String placeholder = "";
-		String lastCode = "§f";
+		String lastCode = ChatColor.WHITE.toString();
 		do {
 			Pattern pattern = Pattern.compile("(" + escapeAllRegex(prefix) + "|" + escapeAllRegex(nickname) + "|" + escapeAllRegex(suffix) + ")");
 			Matcher matcher = pattern.matcher(remaining);
@@ -104,7 +104,7 @@ public class Format {
 					}
 				}
 				if(placeholder.contains(suffix)) {
-					action = format.getClickSuffix();
+					action = format.getClickSuffix(); 
 					text = PlaceholderAPI.setBracketPlaceholders(icp.getPlayer(), format.getClickSuffixText());
 					for(String st : format.getHoverTextSuffix()) {
 						hover += Format.FormatStringAll(st) + "\n";
@@ -123,25 +123,25 @@ public class Format {
 		while(true);
 		return temp;
 	}
-
+	
 	private static String convertLinks(String s) {
 		String remaining = s;
 		String temp = "";
 		int indexLink = -1;
 		int indexLinkEnd = -1;
 		String link = "";
-		String lastCode = "§f";
+		String lastCode = "�f";
 		do {
-			Pattern pattern = Pattern.compile("([a-zA-Z0-9§\\-:/]+\\.[a-zA-Z/0-9§\\-:_#]+(\\.[a-zA-Z/0-9.§\\-:#\\?\\+=_]+)?)");
+			Pattern pattern = Pattern.compile("([a-zA-Z0-9�\\-:/]+\\.[a-zA-Z/0-9�\\-:_#]+(\\.[a-zA-Z/0-9.�\\-:#\\?\\+=_]+)?)");
 			Matcher matcher = pattern.matcher(remaining);
 			if(matcher.find()) {
 				indexLink = matcher.start();
 				indexLinkEnd = matcher.end();
-				link = remaining.substring(indexLink, indexLinkEnd);
+				link = remaining.substring(indexLink, indexLinkEnd);	
 				temp += convertToJsonColors(lastCode + remaining.substring(0, indexLink)) + ",";
 				lastCode = getLastCode(lastCode + remaining.substring(0, indexLink));
 				String https = "";
-				if(ChatColor.stripColor(link).contains("https://"))
+				if(ChatColor.stripColor(link).contains("https://")) 
 					https = "s";
 				temp += convertToJsonColors(lastCode + link, ",\"underlined\":\"" + plugin.getConfig().getBoolean("underlineurls", true) + "\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http" + https + "://" + ChatColor.stripColor(link.replace("http://", "").replace("https://", "")) + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[" + convertToJsonColors(lastCode + link) + "]}}") + ",";
 				lastCode = getLastCode(lastCode + link);
@@ -155,26 +155,26 @@ public class Format {
 		while(true);
 		return temp;
 	}
-
+	
 	public static String getLastCode(String s) {
 		String ts = "";
 		char[] ch = s.toCharArray();
 		for(int a = 0; a < s.length() - 1; a ++) {
-			if(String.valueOf(ch[a + 1]).matches("[lkonmr0123456789abcdef]") && ch[a] == '§') {
+			if(String.valueOf(ch[a + 1]).matches("[lkonmr0123456789abcdef]") && ch[a] == '�') {
 				ts += String.valueOf(ch[a]) + ch[a + 1];
 				if(String.valueOf(ch[a + 1]).matches("[0123456789abcdefr]")) {
 					ts = String.valueOf(ch[a]) + ch[a + 1];
 				}
-			}
+			}				
 		}
 		return ts;
 	}
-
-	public static String convertToJsonColors(String s) {
+	
+	private static String convertToJsonColors(String s) {
 		return convertToJsonColors(s, "");
 	}
-
-	public static String convertToJsonColors(String s, String extensions) {
+	
+	private static String convertToJsonColors(String s, String extensions) {
 		String remaining = s;
 		String temp = "";
 		int indexColor = -1;
@@ -193,10 +193,10 @@ public class Format {
 				break;
 			}
 			modifier = "";
-			indexColor = remaining.indexOf("§");
-			previousColor = color;
+			indexColor = remaining.indexOf("�");	
+			previousColor = color;			
 			color = remaining.substring(1, indexColor + 2);
-			if(!color.matches("[0123456789abcdef]")) {
+			if(!color.matches("[0123456789abcdef]")) {				
 				switch(color) {
 					case "l": {
 						bold = true;
@@ -233,37 +233,37 @@ public class Format {
 				if(color.length() == 0)
 					color = "f";
 			}
-			else {
+			else {				
 				bold = false;
 				obfuscated = false;
 				italic = false;
 				underlined = false;
 				strikethrough = false;
-			}
+			}		
 			if(bold)
-				modifier += ",\"bold\":\"true\"";
+				modifier += ",\"bold\":\"true\"";	
 			if(obfuscated)
-				modifier += ",\"obfuscated\":\"true\"";
+				modifier += ",\"obfuscated\":\"true\"";	
 			if(italic)
-				modifier += ",\"italic\":\"true\"";
+				modifier += ",\"italic\":\"true\"";		
 			if(underlined)
-				modifier += ",\"underlined\":\"true\"";
+				modifier += ",\"underlined\":\"true\"";		
 			if(strikethrough)
-				modifier += ",\"strikethrough\":\"true\"";
+				modifier += ",\"strikethrough\":\"true\"";	
 			remaining = remaining.substring(2);
-			indexNextColor = remaining.indexOf("§");
+			indexNextColor = remaining.indexOf("�");
 			if(indexNextColor == -1) {
 				indexNextColor = remaining.length();
 			}
 			temp += "{\"text\":\"" + remaining.substring(0, indexNextColor) + "\",\"color\":\"" + hexidecimalToJsonColor(color) + "\"" + modifier + extensions + "},";
 			remaining = remaining.substring(indexNextColor);
-		}
-		while(remaining.length() > 1 && indexColor != -1);
+		} 
+		while(remaining.length() > 1 && indexColor != -1); 
 		if(temp.length() > 1)
 			temp = temp.substring(0, temp.length() - 1);
 		return temp;
 	}
-
+	
 	private static String hexidecimalToJsonColor(String c) {
 		switch(c) {
 			case "0": return "black";
@@ -285,7 +285,16 @@ public class Format {
 		}
 		return "";
 	}
-
+	
+	public static String convertPlainTextToJson(String s, boolean convertURL) {
+		if(convertURL) {
+			return "[" + Format.convertLinks(s) + "]";
+		}
+		else {
+			return "[" + convertToJsonColors("�f" + s) + "]";
+		}
+	}
+	
 	public static String formatModerationGUI(String json, Player player, String sender, String channelName, int hash) {
 		if(player.hasPermission("venturechat.gui")) {
 			json = json.substring(0, json.length() - 1);
@@ -293,14 +302,22 @@ public class Format {
 		}
 		return json;
 	}
-
+	
+	public static PacketContainer createPacketPlayOutChat(String json) {
+		WrappedChatComponent component = WrappedChatComponent.fromJson(json);
+		PacketContainer container = new PacketContainer(PacketType.Play.Server.CHAT);
+		container.getModifier().writeDefaults();
+		container.getChatComponents().write(0, component);
+		return container;
+	}
+	
 	public static PacketContainer createPacketPlayOutChat(WrappedChatComponent component) {
 		PacketContainer container = new PacketContainer(PacketType.Play.Server.CHAT);
 		container.getModifier().writeDefaults();
 		container.getChatComponents().write(0, component);
 		return container;
 	}
-
+	
 	public static void sendPacketPlayOutChat(Player player, PacketContainer packet) {
 		try {
 			ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
@@ -309,8 +326,8 @@ public class Format {
 			e.printStackTrace();
 		}
 	}
-
-	public static String toPlainText(Object o, Class<?> c) {
+	
+	public static String toPlainText(Object o, Class<?> c) { 
 		List<Object> finalList = new ArrayList<>();
 		StringBuilder stringbuilder = new StringBuilder();
 		try {
@@ -337,7 +354,7 @@ public class Format {
 		}
 		return stringbuilder.toString();
 	}
-
+	
 	private static void splitComponents(List<Object> finalList, Object o, Class<?> c) throws Exception {
 		if(plugin.getConfig().getString("loglevel", "info").equals("debug")) {
 			for(Method m : c.getMethods()) {
@@ -369,7 +386,7 @@ public class Format {
 			}
 		}
 	}
-
+	
 	protected static Pattern chatColorPattern = Pattern.compile("(?i)&([0-9A-F])");
 	protected static Pattern chatMagicPattern = Pattern.compile("(?i)&([K])");
 	protected static Pattern chatBoldPattern = Pattern.compile("(?i)&([L])");
@@ -428,7 +445,7 @@ public class Format {
 		allFormated = allFormated.replaceAll("%", "\\%");
 		return allFormated;
 	}
-
+	
 	public static String FilterChat(String msg) {
 		int t = 0;
 		List<String> filters = plugin.getConfig().getStringList("filters");
@@ -447,7 +464,7 @@ public class Format {
 		}
 		return msg;
 	}
-
+	
 	public static Boolean isValidColor(String color) {
 		Boolean bFound = false;
 		for(ChatColor bkColors : ChatColor.values()) {

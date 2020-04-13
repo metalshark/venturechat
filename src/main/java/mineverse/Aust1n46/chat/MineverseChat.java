@@ -110,7 +110,6 @@ import org.bukkit.Sound;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.utility.MinecraftReflection;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 
@@ -747,8 +746,7 @@ public class MineverseChat extends JavaPlugin implements PluginMessageListener {
 						}
 						
 						String json = Format.formatModerationGUI(globalJSON, p.getPlayer(), senderName, chatchannel, hash);
-						WrappedChatComponent chatComponent = WrappedChatComponent.fromJson(json);
-						PacketContainer packet = Format.createPacketPlayOutChat(chatComponent);
+						PacketContainer packet = Format.createPacketPlayOutChat(json);
 						
 						if(this.getConfig().getBoolean("ignorechat", false)) {
 							if(!p.getIgnores().contains(senderUUID)) {
@@ -762,13 +760,24 @@ public class MineverseChat extends JavaPlugin implements PluginMessageListener {
 				}
 			}
 			if(subchannel.equals("DiscordSRV")) {
-				String chatchannel = msgin.readUTF();
+				String chatChannel = msgin.readUTF();
 				String message = msgin.readUTF();
-				if(ChatChannel.isChannel(chatchannel) && ChatChannel.getChannel(chatchannel).getBungee()) {
-					for(MineverseChatPlayer p : MineverseChat.onlinePlayers) {
-						p.getPlayer().sendMessage(Format.FormatStringAll(message));
-					}
+				if(!ChatChannel.isChannel(chatChannel)) {
+					return;
 				}
+				ChatChannel chatChannelObj = ChatChannel.getChannel(chatChannel);
+				if(!chatChannelObj.getBungee()) {
+					return;
+				}	
+				
+				String json = Format.convertPlainTextToJson(message, true);
+				int hash = (message.replaceAll("([" + ChatColor.RESET.getChar() + "]([a-z0-9]))", "")).hashCode();
+				
+				for(MineverseChatPlayer p : MineverseChat.onlinePlayers) {
+					String finalJSON = Format.formatModerationGUI(json, p.getPlayer(), "Discord", chatChannelObj.getName(), hash);
+					PacketContainer packet = Format.createPacketPlayOutChat(finalJSON);
+					Format.sendPacketPlayOutChat(p.getPlayer(), packet);
+				}	
 			}
 			if(subchannel.equals("Chwho")) {
 				String identifier = msgin.readUTF();
